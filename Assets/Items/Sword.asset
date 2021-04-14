@@ -16,6 +16,6 @@ MonoBehaviour:
   description: A sharp weapon.
   type: 1
   icon: {fileID: 21300000, guid: 5af4247096dda9d46b4628b13618cbce, type: 3}
-  dropPrefab: {fileID: 919132149155446097, guid: 74de623082dc0a74a887a0d4894b0b8c, type: 3}
+  dropPrefab: {fileID: 5967598179891861368, guid: 1c93fab61afcdae46bc3c7b208c9dad9, type: 3}
   canStack: 0
   maxStackAmount: 1

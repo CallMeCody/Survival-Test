@@ -16,6 +16,6 @@ MonoBehaviour:
   description: it's a stone.
   type: 0
   icon: {fileID: 21300000, guid: 3398a79e26bab99438f0d68f654a4ea6, type: 3}
-  dropPrefab: {fileID: 919132149155446097, guid: fd8e7393e6ac43741bf5c16dcbf5fc4b, type: 3}
+  dropPrefab: {fileID: 6350447734220408468, guid: cdd2cba7124e7644c80d8337d9a01205, type: 3}
   canStack: 1
   maxStackAmount: 500
