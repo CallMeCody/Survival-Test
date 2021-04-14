@@ -16,6 +16,6 @@ MonoBehaviour:
   description: it's wood.
   type: 0
   icon: {fileID: 21300000, guid: 87a8918cb06fdbf42ad7b0ae2a1eec73, type: 3}
-  dropPrefab: {fileID: 919132149155446097, guid: 27c5eac182efbe24ab009fb1f0ec5bf1, type: 3}
+  dropPrefab: {fileID: 3333866418107544359, guid: 99f95514337b6a3428112555f18ff12c, type: 3}
   canStack: 1
   maxStackAmount: 500

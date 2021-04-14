@@ -16,6 +16,6 @@ MonoBehaviour:
   description: Used to plan your builds.
   type: 1
   icon: {fileID: 21300000, guid: c6dc2783df787b5478d0fe310b638ea3, type: 3}
-  dropPrefab: {fileID: 919132149155446097, guid: 80c614f12a8fbff4f877aa2bd07700e8, type: 3}
+  dropPrefab: {fileID: 1275786825733258220, guid: b64bfdb9adaf6e148bc5256ca04d022d, type: 3}
   canStack: 0
   maxStackAmount: 1
