@@ -56,11 +56,33 @@ public class Inventory : MonoBehaviour
             uiSlots[x].index = x;
             uiSlots[x].Clear();
         }
+
+        ClearSelectedItemWindow();
+    }
+
+    public void OnInventoryButton (InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+        {
+            Toggle();
+        }
     }
 
     void Toggle()
     {
-
+        if (inventoryWindow.activeInHierarchy)
+        {
+            inventoryWindow.SetActive(false);
+            onCloseInventory.Invoke();
+            controller.ToggleCursor(false);
+        }
+        else
+        {
+            inventoryWindow.SetActive(true);
+            onOpenInventory.Invoke();
+            ClearSelectedItemWindow();
+            controller.ToggleCursor(true);
+        }
     }
 
     public bool IsOpen()
@@ -145,12 +167,37 @@ public class Inventory : MonoBehaviour
 
     public void SelectItem(int index)
     {
+        if (slots[index].item == null)
+            return;
 
+        selectedItem = slots[index];
+        selectedItemIndex = index;
+
+        selectedItemName.text = selectedItem.item.displayName;
+        selectedItemDescription.text = selectedItem.item.description;
+
+        // set stat values and stat names
+
+        useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
+        equipButton.SetActive(selectedItem.item.type == ItemType.Equipable && !uiSlots[index].equipped);
+        unEquipButton.SetActive(selectedItem.item.type == ItemType.Equipable && uiSlots[index].equipped);
+        dropButton.SetActive(true);
     }
 
     void ClearSelectedItemWindow()
     {
+        // clear the text elements
+        selectedItem = null;
+        selectedItemName.text = string.Empty;
+        selectedItemDescription.text = string.Empty;
+        selectedItemStatNames.text = string.Empty;
+        selectedItemStatValues.text = string.Empty;
 
+        // disable buttons
+        useButton.SetActive(false);
+        equipButton.SetActive(false);
+        unEquipButton.SetActive(false);
+        dropButton.SetActive(false);
     }
 
     public void OnUseButton()
@@ -175,12 +222,24 @@ public class Inventory : MonoBehaviour
 
     public void OnDropButton()
     {
-
+        ThrowItem(selectedItem.item);
+        RemoveSelectedItem();
     }
 
     void RemoveSelectedItem()
     {
+        selectedItem.quantity--;
 
+        if(selectedItem.quantity == 0)
+        {
+            if (uiSlots[selectedItemIndex].equipped == true)
+                UnEquip(selectedItemIndex);
+
+            selectedItem.item = null;
+            ClearSelectedItemWindow();
+        }
+
+        UpdateUI();
     }
 
     public void RemoveItem (ItemData item)

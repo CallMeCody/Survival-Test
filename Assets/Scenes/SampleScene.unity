@@ -951,7 +951,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 277303882}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1884338177}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: OnDropButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &277303882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5973,7 +5985,19 @@ MonoBehaviour:
     m_ActionId: 4c0dd968-b9b9-4050-bce2-dcdc2ca4d24c
     m_ActionName: Main/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1884338177}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: OnInventoryButton
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 9b7eddd3-1ad8-4279-8403-fdfd253defbb
     m_ActionName: Main/Inventory[/Keyboard/tab]
   - m_PersistentCalls:
@@ -6068,6 +6092,7 @@ MonoBehaviour:
   minXLook: -85
   maxXLook: 85
   lookSensitivity: 0.2
+  canLook: 1
 --- !u!4 &1884338174
 Transform:
   m_ObjectHideFlags: 0
