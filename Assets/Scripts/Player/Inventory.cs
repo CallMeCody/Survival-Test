@@ -30,6 +30,7 @@ public class Inventory : MonoBehaviour
 
     // components
     private PlayerController controller;
+    private PlayerNeeds needs;
 
     [Header("Events")]
     public UnityEvent onOpenInventory;
@@ -42,6 +43,7 @@ public class Inventory : MonoBehaviour
     {
         instance = this;
         controller = GetComponent<PlayerController>();
+        needs = GetComponent<PlayerNeeds>();
     }
 
     void Start()
@@ -165,11 +167,14 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
+    // called when we click on an item slot
     public void SelectItem(int index)
     {
+        //we can't select the slot if there's not item
         if (slots[index].item == null)
             return;
 
+        // set the selected item preview window
         selectedItem = slots[index];
         selectedItemIndex = index;
 
@@ -177,6 +182,14 @@ public class Inventory : MonoBehaviour
         selectedItemDescription.text = selectedItem.item.description;
 
         // set stat values and stat names
+        selectedItemStatNames.text = string.Empty;
+        selectedItemStatValues.text = string.Empty;
+
+        for(int x = 0; x < selectedItem.item.consumables.Length; x++)
+        {
+            selectedItemStatNames.text += selectedItem.item.consumables[x].type.ToString() + "\n";
+            selectedItemStatValues.text += selectedItem.item.consumables[x].value.ToString() + "\n";
+        }
 
         useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
         equipButton.SetActive(selectedItem.item.type == ItemType.Equipable && !uiSlots[index].equipped);
@@ -202,7 +215,21 @@ public class Inventory : MonoBehaviour
 
     public void OnUseButton()
     {
+        if(selectedItem.item.type == ItemType.Consumable)
+        {
+            for(int x = 0; x < selectedItem.item.consumables.Length; x++)
+            {
+                switch (selectedItem.item.consumables[x].type)
+                {
+                    case ConsumableType.Health: needs.Heal(selectedItem.item.consumables[x].value); break;
+                    case ConsumableType.Hunger: needs.Eat(selectedItem.item.consumables[x].value); break;
+                    case ConsumableType.Thirst: needs.Drink(selectedItem.item.consumables[x].value); break;
+                    case ConsumableType.Sleep: needs.Sleep(selectedItem.item.consumables[x].value); break;
+                }
+            }
+        }
 
+        RemoveSelectedItem();
     }
 
     public void OnEquipButton()
