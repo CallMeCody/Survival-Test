@@ -16,30 +16,35 @@ public class EquipManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        controller = GetComponent<PlayerController>();
     }
 
+    // called when we press the Left Mouse Button - managed by the Input System
     public void OnAttackInput(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed && curEquip != null && controller.canLook == true)
+        if(context.phase == InputActionPhase.Performed && curEquip != null && controller.canLook == true)
         {
-
+            curEquip.OnAttackInput();
         }
     }
 
+    // called when we press the Right Mouse Button - managed by the Input System
     public void OnAltAttackInput(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed && curEquip != null && controller.canLook == true)
+        if(context.phase == InputActionPhase.Performed && curEquip != null && controller.canLook == true)
         {
-
+            curEquip.OnAltAttackInput();
         }
     }
 
+    // called when we equip an item
     public void EquipNew(ItemData item)
     {
         UnEquip();
         curEquip = Instantiate(item.equipPrefab, equipParent).GetComponent<Equip>();
     }
 
+    // called when we unequip item
     public void UnEquip()
     {
         if(curEquip != null)

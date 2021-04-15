@@ -25,6 +25,7 @@ public class ItemSlotUI : MonoBehaviour
         outline.enabled = equipped;
     }
 
+    // sets the item to be displayed in the slot
     public void Set(ItemSlot slot)
     {
         curSlot = slot;
@@ -37,6 +38,7 @@ public class ItemSlotUI : MonoBehaviour
             outline.enabled = equipped;
     }
 
+    // clears the item slot
     public void Clear()
     {
         curSlot = null;
@@ -45,6 +47,7 @@ public class ItemSlotUI : MonoBehaviour
         quantityText.text = string.Empty;
     }
 
+    // called when we click on the slot
     public void OnButtonClick()
     {
         Inventory.instance.SelectItem(index);

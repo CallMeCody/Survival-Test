@@ -62,6 +62,7 @@ public class Inventory : MonoBehaviour
         ClearSelectedItemWindow();
     }
 
+    // called when we give an inventory input - managed by the Input System
     public void OnInventoryButton (InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Started)
@@ -70,6 +71,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // opens or closes the inventory
     void Toggle()
     {
         if (inventoryWindow.activeInHierarchy)
@@ -87,6 +89,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // is the inventory currently open?
     public bool IsOpen()
     {
         return inventoryWindow.activeInHierarchy;
@@ -197,6 +200,7 @@ public class Inventory : MonoBehaviour
         dropButton.SetActive(true);
     }
 
+    // called when the inventory opens or the currently selected item has depleted
     void ClearSelectedItemWindow()
     {
         // clear the text elements
@@ -213,11 +217,14 @@ public class Inventory : MonoBehaviour
         dropButton.SetActive(false);
     }
 
+    // called when the "Use" button is pressed
     public void OnUseButton()
     {
-        if(selectedItem.item.type == ItemType.Consumable)
+        // is the selected item a consumable?
+        if (selectedItem.item.type == ItemType.Consumable)
         {
-            for(int x = 0; x < selectedItem.item.consumables.Length; x++)
+            // loop through all the needs it will contribute to
+            for (int x = 0; x < selectedItem.item.consumables.Length; x++)
             {
                 switch (selectedItem.item.consumables[x].type)
                 {
@@ -300,6 +307,7 @@ public class Inventory : MonoBehaviour
     }
 }
 
+// stores information about an item slot in the inventory
 public class ItemSlot
 {
     public ItemData item;
