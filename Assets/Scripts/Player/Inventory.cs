@@ -232,31 +232,50 @@ public class Inventory : MonoBehaviour
         RemoveSelectedItem();
     }
 
+    // called when the "Equip" button is pressed 
     public void OnEquipButton()
     {
+        if (uiSlots[curEquipIndex].equipped)
+            UnEquip(curEquipIndex);
 
+        uiSlots[selectedItemIndex].equipped = true;
+        curEquipIndex = selectedItemIndex;
+        EquipManager.instance.EquipNew(selectedItem.item);
+        UpdateUI();
+
+        SelectItem(selectedItemIndex);
     }
 
+    // unequips the requested item
     void UnEquip(int index)
     {
+        uiSlots[index].equipped = false;
+        EquipManager.instance.UnEquip();
+        UpdateUI();
 
+        if (selectedItemIndex == index)
+            SelectItem(index);
     }
 
+    // called when the "UnEquip" button is pressed
     public void OnUnEquipButton()
     {
-
+        UnEquip(selectedItemIndex);
     }
 
+    // called when the "Drop" button is pressed
     public void OnDropButton()
     {
         ThrowItem(selectedItem.item);
         RemoveSelectedItem();
     }
 
+    // removes the currently selected item
     void RemoveSelectedItem()
     {
         selectedItem.quantity--;
 
+        // have we dropped all of this stack?
         if(selectedItem.quantity == 0)
         {
             if (uiSlots[selectedItemIndex].equipped == true)
@@ -274,6 +293,7 @@ public class Inventory : MonoBehaviour
 
     }
 
+    // does the player have "quantity" amount of "item"s?
     public bool HasItems(ItemData item, int quantity)
     {
         return false;
