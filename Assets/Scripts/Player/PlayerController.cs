@@ -51,34 +51,42 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        // calculate the move direction relative to where we're facing.
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
         dir *= moveSpeed;
         dir.y = rig.velocity.y;
 
+        // assign our Rigidbody velocity
         rig.velocity = dir;
     }  
 
     void CameraLook()
     {
+        // rotate the camera container up and down
         camCurXRot += mouseDelta.y * lookSensitivity;
         camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
 
+        // rotate the player left and right
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 
+    // called when we move our mouse - managed by the Input System
     public void OnLookInput (InputAction.CallbackContext context)
     {
         mouseDelta = context.ReadValue<Vector2>();
     }
 
+    // called when we press WASD - managed by the Input System
     public void OnMoveInput (InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed)
+        // are we holding down a movement button?
+        if (context.phase == InputActionPhase.Performed)
         {
             curMovementInput = context.ReadValue<Vector2>();
         }
-        else if(context.phase == InputActionPhase.Canceled)
+        // have we let go of a movement button?
+        else if (context.phase == InputActionPhase.Canceled)
         {
             curMovementInput = Vector2.zero;
         }

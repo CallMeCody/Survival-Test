@@ -10,16 +10,20 @@ public class DamageIndicator : MonoBehaviour
 
     private Coroutine fadeAway;
 
+    // called when the player takes damage - listening to the OnTakeDamage event
     public void Flash ()
     {
+        // stop all currently running FadeAway coroutines
         if (fadeAway != null)
             StopCoroutine(fadeAway);
 
+        // reset the image and fade it away
         image.enabled = true;
         image.color = Color.white;
         fadeAway = StartCoroutine(FadeAway());
     }
 
+    // fades the image away over time
     IEnumerator FadeAway ()
     {
         float a = 1.0f;

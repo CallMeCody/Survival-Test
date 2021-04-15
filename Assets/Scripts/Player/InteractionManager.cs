@@ -24,16 +24,21 @@ public class InteractionManager : MonoBehaviour
 
     void Update()
     {
-        if(Time.time - lastCheckTime > checkRate)
+        // true every "checkRate" seconds
+        if (Time.time - lastCheckTime > checkRate)
         {
             lastCheckTime = Time.time;
 
+            // create a ray from the center of our screen pointing in the direction we're looking
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
+            // did we hit something?
+            if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
             {
-                if(hit.collider.gameObject != curInteractGameObject)
+                // is this not our current interactable?
+                // if so, set it as our current interactable
+                if (hit.collider.gameObject != curInteractGameObject)
                 {
                     curInteractGameObject = hit.collider.gameObject;
                     curInteractable = hit.collider.GetComponent<IInteractable>();
@@ -49,15 +54,18 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
+    // called when we hover over a new interactable
     void SetPromptText()
     {
         promptText.gameObject.SetActive(true);
         promptText.text = string.Format("<b>[E]</b> {0}", curInteractable.GetInteractPrompt());
     }
 
+    // called when we press the "E" button - managed by the Input System
     public void OnInteractInput(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Started && curInteractable != null)
+        // did we press down this frame and are we hovering over an interactable?
+        if (context.phase == InputActionPhase.Started && curInteractable != null)
         {
             curInteractable.OnInteract();
             curInteractGameObject = null;

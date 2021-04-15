@@ -8,6 +8,7 @@ public enum ItemType
     Equipable,
     Consumable
 }
+
 public enum ConsumableType
 {
     Hunger,
